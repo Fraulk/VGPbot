@@ -21,7 +21,7 @@ def retweetRandmly(tweets):
     n = randint(0, len(tweets) - 1)
     print(tweets[n])
     api.retweet(tweets[n])
-    print('Tweet retweeted at', str(datetime.datetime.now()))
+    print('Tweet retweeted at', str(datetime.now()))
 
 # Need cleanup
 def editBanner(searchResult):
