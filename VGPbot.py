@@ -16,12 +16,15 @@ def getId(tweet):
     id = json.dumps(tweet['id'])
     return id
 
-# Randomly retweet latest tweets
+# Randomly retweet latest tweets by picking the id
 def retweetRandmly(tweets):
     n = randint(0, len(tweets) - 1)
-    print(tweets[n])
-    api.retweet(tweets[n])
-    print('Tweet retweeted at', str(datetime.now()))
+    try:
+        print(tweets[n])
+        api.retweet(tweets[n])
+        print('Tweet retweeted at', str(datetime.now()))
+    except tweepy.error.TweepError as e:
+        print("Already retweeted :", e)
 
 # Need cleanup
 def editBanner(searchResult):
