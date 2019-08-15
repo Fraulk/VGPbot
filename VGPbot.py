@@ -61,15 +61,26 @@ class StreamListener(tweepy.StreamListener):
         # Check if it's a RT
         if not (hasattr(status, 'retweeted_status')):
             # print('isNotRT')
+            tweetId = status.id
+            name = status.user.name
+            userId = status.user.id
+            # print(status)
             entities = status.entities
-            print(entities)
+            # print(entities)
             if ('media' in entities):
-                print('isMedia')
+                # print('isMedia')
                 media = entities['media']
                 # print(media[0].get('type'))
                 if not ('video' in media[0].get('media_url')):
-                    print('isPhoto')
-            
+                    try:
+                        if not (userId == '67035608'): #Check if it's not Frans Bouma's tweet
+                            api.retweet(tweetId)
+                        else:
+                            if('reshade' in status.text):   #If it is, detect if 'reshade' is in the tweet to differenciate a normal tweet from a VP tweet
+                                api.retweet(tweetId)
+                        print('Tweet from ' + name + ' retweeted')
+                    except tweepy.error.TweepError as e:
+                        print(e)
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -91,10 +102,11 @@ if __name__ == '__main__':
 
         StreamLis = StreamListener()
         Stream = tweepy.Stream(auth = api.auth, listener=StreamListener())
-        Stream.filter(follow=['1142162854772117504'], is_async=True)
+        Stream.filter(follow=['1292501732', '72931470', '848058944', '1004237135828914177', '987349604860645377', '3004289413', '1119186211715915777', '1161423732667117568', '67035608', '991608609623695361', '4884334202', '2307068851'], is_async=True)
+        # ['@freaksboi', '@riketrs', '@ItsYFP', '@AlexSanchous81', '@erika_tschinkel', '@Vikster6', '@TheAshenCrow', '@_Jellybird', '@FransBouma', '@TribalgraphMFCC', '@Jack1_1Hammer'(EugenyDemidov), '@Hodgedogs']
 
         # print(id)
-        # retweetRandmly(id)
+        retweetRandmly(id)
 
         #Every hours
         t.sleep(3600)
