@@ -55,6 +55,27 @@ def is_time_between(begin_time, end_time, check_time=None):
     else: # crosses midnight
         return check_time >= begin_time or check_time <= end_time
 
+class StreamListener(tweepy.StreamListener):
+
+    def on_status(self, status):
+        # Check if it's a RT
+        if not (hasattr(status, 'retweeted_status')):
+            # print('isNotRT')
+            entities = status.entities
+            print(entities)
+            if ('media' in entities):
+                print('isMedia')
+                media = entities['media']
+                # print(media[0].get('type'))
+                if not ('video' in media[0].get('media_url')):
+                    print('isPhoto')
+            
+
+    def on_error(self, status_code):
+        if status_code == 420:
+            #returning False in on_data disconnects the stream
+            return False
+
 if __name__ == '__main__':
     while True:
         # The most used hashtag i think
@@ -68,8 +89,12 @@ if __name__ == '__main__':
         if(is_time_between(time(15, 00), time(16, 00))):
             editBanner(r)
 
+        StreamLis = StreamListener()
+        Stream = tweepy.Stream(auth = api.auth, listener=StreamListener())
+        Stream.filter(follow=['1142162854772117504'], is_async=True)
+
         # print(id)
-        retweetRandmly(id)
+        # retweetRandmly(id)
 
         #Every hours
         t.sleep(3600)
