@@ -63,7 +63,7 @@ class StreamListener(tweepy.StreamListener):
             # print('isNotRT')
             tweetId = status.id
             name = status.user.name
-            userId = status.user.id
+            # userId = status.user.id
             # print(status)
             entities = status.entities
             # print(entities)
@@ -73,11 +73,7 @@ class StreamListener(tweepy.StreamListener):
                 # print(media[0].get('type'))
                 if not ('video' in media[0].get('media_url')):
                     try:
-                        if not (userId == '67035608'): #Check if it's not Frans Bouma's tweet
-                            api.retweet(tweetId)
-                        else:
-                            if('reshade' in status.text):   #If it is, detect if 'reshade' is in the tweet to differenciate a normal tweet from a VP tweet
-                                api.retweet(tweetId)
+                        api.retweet(tweetId)
                         print('Tweet from ' + name + ' retweeted')
                     except tweepy.error.TweepError as e:
                         print(e)
@@ -102,8 +98,8 @@ if __name__ == '__main__':
 
         StreamLis = StreamListener()
         Stream = tweepy.Stream(auth = api.auth, listener=StreamListener())
-        Stream.filter(follow=['1292501732', '72931470', '848058944', '1004237135828914177', '987349604860645377', '3004289413', '1119186211715915777', '1161423732667117568', '67035608', '991608609623695361', '4884334202', '2307068851'], is_async=True)
-        # ['@freaksboi', '@riketrs', '@ItsYFP', '@AlexSanchous81', '@erika_tschinkel', '@Vikster6', '@TheAshenCrow', '@_Jellybird', '@FransBouma', '@TribalgraphMFCC', '@Jack1_1Hammer'(EugenyDemidov), '@Hodgedogs']
+        Stream.filter(follow=['1292501732', '72931470', '848058944', '1004237135828914177', '987349604860645377', '3004289413', '1119186211715915777', '1161423732667117568', '991608609623695361', '4884334202'], is_async=True)
+        # ['@freaksboi', '@riketrs', '@ItsYFP', '@AlexSanchous81', '@erika_tschinkel', '@Vikster6', '@TheAshenCrow', '@_Jellybird', '@TribalgraphMFCC', '@Jack1_1Hammer'(EugenyDemidov)]
 
         # print(id)
         retweetRandmly(id)
