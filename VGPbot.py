@@ -84,13 +84,14 @@ class StreamListener(tweepy.StreamListener):
             return False
 
 if __name__ == '__main__':
+    print('Started')
     while True:
         # The most used hashtag i think
         r = api.search(q = '#VGPUnite filter:media -filter:retweets -filter:videos', count = '35', include_entities = 'true')
         # print(r)
-        id = []
-        for tweet in r:
-            id.append(getId(tweet._json))
+        # id = []
+        # for tweet in r:
+        #     id.append(getId(tweet._json))
         
         # New banner from shots every day
         if(is_time_between(time(15, 00), time(16, 00))):
@@ -102,7 +103,7 @@ if __name__ == '__main__':
         # ['@freaksboi', '@riketrs', '@ItsYFP', '@AlexSanchous81', '@erika_tschinkel', '@Vikster6', '@TheAshenCrow', '@_Jellybird', '@TribalgraphMFCC', '@Jack1_1Hammer'(EugenyDemidov)]
 
         # print(id)
-        retweetRandmly(id)
+        # retweetRandmly(id)
 
         #Every hours
         t.sleep(3600)
